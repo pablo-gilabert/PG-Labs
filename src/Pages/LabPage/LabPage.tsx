@@ -4,6 +4,7 @@ import { SiteContext } from '../../Contexts/SiteContext';
 import { ConfirmModal, OpenModalForm, SuccessModal } from '../../Components/SweetAlertForms/SweetAlertForms';
 import type { ModalLabels } from '../../Components/SweetAlertForms/SweetAlertForms';
 import { formatMoney, ReadDemo, WriteDemo } from '../../Utils/DemoStorage';
+import { addCartQuantity, adjustCartQuantity, getCartSummary, removeCartProduct, setCartQuantity } from '../../Utils/CartLogic';
 import type { Translation } from '../../Data/Translations';
 import styles from './labPage.module.css';
 type LabTab = 'students' | 'services' | 'sections' | 'shop';
@@ -393,18 +394,10 @@ function ShopDemo({ text, language, cart, setCart, orders, setOrders }: {
     orders: Order[];
     setOrders: React.Dispatch<React.SetStateAction<Order[]>>;
 }) {
-    const items = Products.filter((product) => (cart[product.id] ?? 0) > 0);
-    const quantity = items.reduce((total, product) => total + cart[product.id], 0);
-    const total = items.reduce((value, product) => value + product.price * cart[product.id], 0);
+    const { items, quantity, total } = getCartSummary(Products, cart);
 
     function update(id: string, by: number) {
-        setCart((current) => {
-            const next = { ...current };
-            const amount = Math.max(0, (next[id] ?? 0) + by);
-            if (amount === 0) delete next[id];
-            else next[id] = Math.min(999, amount);
-            return next;
-        });
+        setCart((current) => adjustCartQuantity(current, id, by));
     }
 
     async function addProduct(product: Product) {
@@ -413,7 +406,7 @@ function ShopDemo({ text, language, cart, setCart, orders, setOrders }: {
         ], { ...modalLabels(text), save: text.lab.addToCart });
         if (!values || typeof values.quantity !== 'string') return;
         const amount = Number(values.quantity);
-        setCart((current) => ({ ...current, [product.id]: Math.min(999, (current[product.id] ?? 0) + amount) }));
+        setCart((current) => addCartQuantity(current, product.id, amount));
     }
 
     async function changeQuantity(product: Product) {
@@ -426,16 +419,12 @@ function ShopDemo({ text, language, cart, setCart, orders, setOrders }: {
             await removeProduct(product);
             return;
         }
-        setCart((current) => ({ ...current, [product.id]: amount }));
+        setCart((current) => setCartQuantity(current, product.id, amount));
     }
 
     async function removeProduct(product: Product) {
         if (await ConfirmModal(text.lab.removeProduct, `${product.name} · ${text.lab.removeProductHint}`, modalLabels(text), true)) {
-            setCart((current) => {
-                const next = { ...current };
-                delete next[product.id];
-                return next;
-            });
+            setCart((current) => removeCartProduct(current, product.id));
         }
     }
 

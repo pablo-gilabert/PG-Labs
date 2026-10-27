@@ -9,3 +9,11 @@ dist/
 !.vscode/extensions.json
 *.tsbuildinfo
 .vercel/
+
+# Generated test coverage reports
+coverage/
+
+# Playwright-generated artifacts
+playwright-report/
+test-results/
+playwright/.cache/

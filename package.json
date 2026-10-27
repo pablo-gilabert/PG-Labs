@@ -1,15 +1,24 @@
 {
   "name": "pg-labs-portfolio",
   "private": true,
-  "version": "1.2.1",
+  "version": "1.4.3",
   "type": "module",
-  "description": "PG Labs multilingual portfolio with six industry demos and a SweetAlert2-powered interactive business tools laboratory.",
+  "description": "PG Labs — multilingual React and TypeScript freelance portfolio with live case studies, interactive demos, Vitest unit tests and Playwright E2E coverage.",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "lint": "oxlint --type-aware .",
-    "typecheck": "tsc -b"
+    "typecheck": "tsc -b && tsc --noEmit -p tsconfig.e2e.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:unit": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test --config=Playwright.config.ts",
+    "test:e2e:ui": "playwright test --config=Playwright.config.ts --ui",
+    "test:e2e:headed": "playwright test --config=Playwright.config.ts --headed",
+    "test:e2e:report": "playwright show-report",
+    "test:all": "npm run typecheck && npm run lint && npm run test:unit && npm run build && npm run test:e2e"
   },
   "dependencies": {
     "lucide-react": "^1.61.0",
@@ -26,6 +35,12 @@
     "oxlint": "^1.89.0",
     "oxlint-tsgolint": "^7.0.2004",
     "typescript": "~5.9.3",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "vitest": "^4.1.12",
+    "@vitest/coverage-v8": "^4.1.12",
+    "jsdom": "^27.0.0",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@playwright/test": "^1.64.1"
   }
 }

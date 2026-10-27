@@ -1,8 +1,8 @@
 # PG Labs — Freelance Developer Portfolio
 
-**Current version:** 1.2.1
+**Current version:** 1.4.3
 
-> **GitHub description:** PG Labs is a multilingual React and TypeScript freelance portfolio with six live case studies, responsive design, interactive SweetAlert2 administration demos, a shopping cart, and dark/light themes.
+> **GitHub description:** PG Labs is a multilingual React and TypeScript freelance portfolio featuring six live projects, interactive business demos, Vitest and Playwright tests, responsive design, and dark/light themes.
 
 A production-oriented, mobile-first portfolio built for **Pablo Gilabert**, a freelance frontend developer based in Buenos Aires, Argentina. It showcases existing portfolio demos, web development and redesign services, technical experience, and a hands-on feature playground for potential clients.
 
@@ -22,12 +22,12 @@ The brand assets live under `public/brand/` and `public/`.
 - **Cart controls:** remove every unit of one product, empty the entire cart with confirmation, set product quantities in a SweetAlert2 modal, and retain convenient stepper buttons.
 - **Client-only demonstration data:** stored in browser `localStorage`; no real authentication, payment processing, API, or database is implied.
 - **Accessibility and responsiveness:** semantic pages, keyboard navigation, focus states, labeled controls, reduced-motion support, and styles from 320px through large/4K displays.
-- **Quality checks:** Oxlint configured for React automatic JSX runtime, semantic project filters, and explicit global-style imports.
+- **Quality checks:** Vitest unit/component tests, Playwright Chromium desktop/mobile E2E tests, V8 coverage reports, and Oxlint configured for the automatic JSX runtime.
 - **Deployment ready:** Vite production build, TypeScript checks, Oxlint, and Vercel SPA rewrites.
 
 ## Stack
 
-React 19 · TypeScript 5 · SweetAlert2 11 · Vite 7 · @vitejs/plugin-react 5 · React Router 7 · CSS Modules · Lucide React 1 · Oxlint · Vercel. Brand icons are implemented as isolated SVG components.
+React 19 · TypeScript 5 · SweetAlert2 11 · Vite 7 · @vitejs/plugin-react 5 · React Router 7 · CSS Modules · Lucide React 1 · Vitest 4 · React Testing Library · jsdom · Playwright 1 · Oxlint · Vercel. Brand icons are implemented as isolated SVG components.
 
 ## Project layout
 
@@ -59,13 +59,41 @@ src/
 │   └── ServicesPage/
 ├── Styles/
 │   └── global.css
+├── Tests/
+│   ├── CartLogic.test.ts
+│   ├── DemoStorage.test.ts
+│   ├── LabPage.test.tsx
+│   ├── ProjectCard.test.tsx
+│   ├── SiteContext.test.tsx
+│   └── TestSetup.ts
 ├── Utils/
+│   ├── CartLogic.ts
 │   └── DemoStorage.ts
 ├── App.tsx
 └── Main.tsx
+Tests/
+└── E2E/
+    ├── TestHelpers.ts
+    ├── Navigation.spec.ts
+    ├── Portfolio.spec.ts
+    ├── Preferences.spec.ts
+    ├── Students.spec.ts
+    ├── Services.spec.ts
+    ├── Sections.spec.ts
+    ├── Cart.spec.ts
+    ├── Contact.spec.ts
+    └── Responsive.spec.ts
+Playwright.config.ts
+tsconfig.e2e.json
 ```
 
 React components, types, and new TypeScript filenames use **PascalCase**. CSS module filenames and CSS classes use **camelCase**. Code and code comments are in **English**; user-facing text is localized.
+
+## E2E reliability
+
+The Playwright suite selects the active laboratory tab after reload before asserting visible content.
+Portfolio filters count project card articles (not decorative headings inside artwork), and the full-card overlay is exercised with a real pointer click in the artwork area.
+The E2E tests continue to assert saved browser data independently of the active tab.
 
 ## Development
 
@@ -77,6 +105,15 @@ React components, types, and new TypeScript filenames use **PascalCase**. CSS mo
 | `npm run lint` | Run Oxlint with type-aware checks |
 | `npm run build` | Create production files in `dist/` |
 | `npm run preview` | Preview a production build |
+| `npm test` | Execute all Vitest unit/component tests once |
+| `npm run test:watch` | Run Vitest in interactive watch mode |
+| `npm run test:unit` | Alias for the one-shot unit/component suite |
+| `npm run test:coverage` | Generate terminal and HTML V8 coverage reports |
+| `npm run test:e2e` | Build and run Playwright E2E tests in Chromium |
+| `npm run test:e2e:ui` | Open Playwright’s interactive test runner |
+| `npm run test:e2e:headed` | Run browser tests with a visible browser |
+| `npm run test:e2e:report` | Open the last Playwright HTML report |
+| `npm run test:all` | Typecheck, lint, unit tests, build, and E2E tests |
 
 The project deploys on **Vercel** using the Vite framework preset. The `vercel.json` rewrite supports direct navigation to React Router pages such as `/projects`, `/projects/academy`, and `/lab`. Use `npm run build` as the build command and `dist` as output directory. For a commercial production deployment, use a Vercel plan that permits commercial use.
 
@@ -133,6 +170,20 @@ A static frontend is suitable for this public-facing portfolio, but actual clien
 
 Built to communicate capabilities clearly, demonstrate functionality honestly, and grow alongside a freelance development business.
 
+## Automated testing (Vitest and React Testing Library)
+
+The initial automated suite exercises **production logic**, not just test-only reimplementations:
+
+- `CartLogic.test.ts` verifies totals, unknown product IDs, quantity updates, max quantity, targeted removal, and immutability. `LabPage.tsx` calls these same `CartLogic.ts` functions.
+- `DemoStorage.test.ts` covers browser persistence, invalid JSON, runtime validation, denied storage access, and ARS localization.
+- `SiteContext.test.tsx` checks default language/theme, remembered preferences, switching, and invalid settings.
+- `ProjectCard.test.tsx` checks project case-study routes, live demo and repository links, and industry labels.
+- `LabPage.test.tsx` checks real React state transitions for student management, service/section creation, cart operations, reset and localStorage. SweetAlert2 presentation is mocked so these tests do not depend on animation timing.
+
+Run `npm install` before running the tests for the first time. Use `npm run test:unit` for a single pass, `npm run test:watch` for interactive development, or `npm run test:coverage` for a coverage report in `coverage/` (gitignored). Vitest is configured in the existing `vite.config.ts`, with `jsdom` and `src/Tests/TestSetup.ts`. The tests do not require a real API or a deployed Vercel instance.
+
+These unit tests complement the Playwright end-to-end suite; neither suite replaces all manual usability checks or independently verifies the availability of third-party websites.
+
 ## Quality checks
 
 The project uses the automatic JSX runtime and semantic UI controls. TypeScript, Oxlint, and Vite build are available through the project scripts; all three must pass before a production deployment. The demo table uses named row headers, chart decoration is hidden from assistive technology, order confirmation uses a live `output` element, and student status changes are runtime-validated.
@@ -146,3 +197,32 @@ The project uses the automatic JSX runtime and semantic UI controls. TypeScript,
 ## Version 1.2.1
 
 - Corrected the language selector effect to return `undefined` explicitly while closed, keeping React effect cleanup consistent without disabling lint rules.
+
+## Version 1.3.0
+
+- Added Vitest and React Testing Library as the initial automated testing stage.
+- Extracted pure cart operations into `CartLogic.ts` for unit tests and reuse by the real shopping-cart UI.
+- Added coverage tooling; no extra installation or deployment guide files were created.
+
+## Version 1.4.0 — Playwright browser testing
+
+The E2E suite runs the built site in **Chromium** with Playwright’s own isolated browser contexts. Browser tests are independent of the published Vercel domain and do not submit real contact forms or financial transactions.
+
+- **Navigation:** direct routes, header/footer navigation, unknown routes, and JavaScript exceptions.
+- **Portfolio:** six cases, filter counts, card-wide navigation, and exact published demo link attributes (no request sent to external sites).
+- **Preferences:** Spain/England/Brazil language switcher, Escape handling, light/dark theme, and persistence across reloads.
+- **Laboratory:** real SweetAlert2 dialogs for students, services, sections, shopping cart, reset, validation, cancellation, and localStorage persistence.
+- **Responsive:** mobile menu, three small viewport widths, overflow checks, and narrow-screen modal geometry using mobile Chromium emulation.
+- **Contact:** link destinations and client-side form requirements, without opening an external mail handler.
+
+**One-time local setup:** install Node dependencies via `npm install`, then obtain the Playwright browser using `npm exec playwright install chromium`. `npm run test:e2e` launches the production preview automatically on `127.0.0.1:4179` after building the app. **Do not start a separate preview on that port.** The configuration can reuse an existing preview when developing locally, but CI always starts its own server.
+
+Use `npm run test:e2e:ui` for an interactive runner, `npm run test:e2e:headed` to see browser windows, and `npm run test:e2e:report` after a run. On failures Playwright saves **screenshots, videos and traces** in `test-results/` and a report in `playwright-report/`; both paths are gitignored.
+
+The E2E tests default to Spanish and dark mode, with browser-context isolation. The desktop suite and mobile suite are deliberately separated by Playwright projects. The tests **do not** click live demo URLs, so third-party outages do not produce false failures. Browser tests validate interactions and basic layout invariants, not visual taste or full WCAG accessibility conformance.
+
+The `package.json` minimum versions of `vitest` and `@vitest/coverage-v8` are **4.1.12** to avoid the previously reported advisories. Keep those versions aligned in the lockfile.
+
+## E2E helper consistency (1.4.1)
+
+`Tests/E2E/TestHelpers.ts` exports the shared Playwright modal, navigation, and localStorage helpers used by the student, service, section, and cart specifications. The helper reads the actual `gs-demo-*` keys and interacts with SweetAlert2 via accessible buttons and stable selectors.
