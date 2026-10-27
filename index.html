@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b0e14" />
+    <meta name="description" content="PG Labs · Desarrollo web a medida con React y TypeScript. Explorá seis proyectos publicados de gastronomía, educación, belleza, arte y comercio, además de herramientas interactivas." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="PG Labs | Desarrollo web a medida" />
+    <meta property="og:description" content="Seis demos web de distintos rubros, casos prácticos, rediseños y herramientas digitales para negocios." />
+    <title>PG Labs | Desarrollo web a medida</title>
+    <script>
+      try {
+        document.documentElement.dataset.theme = localStorage.getItem('gs-theme') === 'light' ? 'light' : 'dark';
+        document.documentElement.lang = ['es', 'en', 'pt'].includes(localStorage.getItem('gs-language')) ? localStorage.getItem('gs-language') : 'es';
+      } catch (_) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/Main.tsx"></script>
+  </body>
+</html>

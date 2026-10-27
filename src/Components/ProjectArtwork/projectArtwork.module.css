@@ -1,0 +1,76 @@
+.frame {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.browserBar {
+  flex: 0 0 31px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 0 13px;
+  font-size: 9px;
+  letter-spacing: .015em;
+  background: #e7e9e4;
+  color: #6f7772;
+}
+.browserBar > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dots { display: flex; gap: 4px; }
+.dots i { background: #bdc4bc; width: 6px; height: 6px; border-radius: 50%; }
+.burgerCanvas, .storeCanvas, .restaurantCanvas { flex: 1; position: relative; overflow: hidden; }
+.burgerCanvas { background: #1c1916; color: #fff4e3; }
+.burgerNavigation { position: relative; display: flex; justify-content: space-between; align-items: center; padding: 19px 25px; z-index: 2; }
+.burgerNavigation b { letter-spacing: -.09em; font-size: 23px; font-weight: 900; }
+.burgerNavigation b span { color: #f7a64c; }
+.burgerNavigation > span { font-size: 8px; letter-spacing: .15em; opacity: .8; }
+.burgerCopy { z-index: 2; position: absolute; top: 40%; left: 7%; display: flex; flex-direction: column; align-items: start; gap: 11px; }
+.burgerCopy small { color: #ffb875; letter-spacing: .18em; font-size: 9px; font-weight: 700; }
+.burgerCopy strong { font-size: clamp(22px,2.5vw,38px); line-height: .99; font-weight: 900; letter-spacing: -.065em; }
+.burgerCopy > span { background: #f3aa55; padding: 8px 12px; font-weight: 900; letter-spacing: .07em; font-size: 7px; color: #251a12; }
+.burgerArt { position: absolute; width: 42%; height: 62%; right: -1%; top: 23%; transform: rotate(-13deg); display: flex; flex-direction: column; filter: drop-shadow(0 14px 24px #0009); }
+.burgerArt i { position: relative; display: block; flex: none; }
+.bunTop { height: 38%; background: linear-gradient(155deg,#e7a653,#c87828); border-radius: 65% 65% 20% 20%; border-bottom: 5px solid #ad5e1f; }
+.lettuce { height: 12%; margin-top: -3%; background: #75a534; border-radius: 40%; transform: rotate(3deg); }
+.cheese { height: 9%; background: #f1c441; transform: skewY(-8deg); border-radius: 3px; }
+.patty { height: 20%; background: #723d22; border-radius: 24%; border-bottom: 4px solid #422513; }
+.bunBottom { height: 19%; background: #da9142; border-radius: 13% 13% 45% 45%; }
+.burgerFoot { position: absolute; bottom: 15px; left: 7%; right: 7%; display: flex; justify-content: space-between; align-items: center; font-size: 8px; letter-spacing: .15em; color: #e9ac73; }
+.storeCanvas { background: #fbfaf7; color: #252c29; padding: 15px 20px; }
+.storeNavigation { display: flex; justify-content: space-between; align-items: center; padding-bottom: 17px; border-bottom: 1px solid #e4e5e0; }
+.storeNavigation b { font-size: 15px; letter-spacing: -.06em; }
+.storeNavigation b span { color: #cb926e; }
+.storeHeadline { display: flex; align-items: flex-start; flex-direction: column; gap: 6px; margin: 14px 0 20px; }
+.storeHeadline span { font-size: 8px; letter-spacing: .16em; color: #89908b; }
+.storeHeadline strong { font-size: 23px; letter-spacing: -.05em; }
+.storeProducts { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 11px; }
+.storeProducts > div { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.storeProducts i { display: block; height: 80px; position: relative; border-radius: 2px; overflow: hidden; }
+.storeProductOne { background: linear-gradient(135deg,#b9c7b7,#8eaaa3); }
+.storeProductTwo { background: linear-gradient(135deg,#e1c5ba,#cd998e); }
+.storeProductThree { background: linear-gradient(135deg,#d4d0ba,#aaa88a); }
+.storeProducts i::before { content: ''; position: absolute; inset: 20% 32% 12%; border-radius: 16px 16px 10px 10px; background: #fff8; box-shadow: 7px 8px 13px #2222; transform: rotate(-7deg); }
+.storeProducts div:nth-child(2) i::before { border-radius: 50% 50% 30% 30%; transform: rotate(10deg); }
+.storeProducts div:nth-child(3) i::before { border-radius: 20%; transform: rotate(-12deg); }
+.storeProducts span { color: #89908b; font-size: 7px; letter-spacing: .08em; }
+.storeProducts b { font-size: 10px; letter-spacing: -.02em; }
+.restaurantCanvas { background: #162721; color: #ebdfc5; padding: 17px 19px; }
+.restaurantNavigation { display: flex; justify-content: space-between; align-items: center; font-family: Georgia,serif; font-size: 14px; letter-spacing: .3em; }
+.restaurantCircle { position: absolute; width: 170px; height: 170px; border: 1px solid #7c765653; border-radius: 50%; top: 13%; right: -16px; display: grid; place-items: center; }
+.restaurantPlate { position: relative; width: 120px; height: 120px; border: 12px double #bfb293; border-radius: 50%; background: radial-gradient(circle at 43% 36%,#dbb98c,#bd8a65 46%,#9d6247 70%); box-shadow: 0 8px 24px #0007; }
+.restaurantPlate i { position: absolute; width: 25px; height: 45px; border-radius: 80% 10% 80% 10%; background: #587946; transform: rotate(45deg); top: 20px; left: 33px; }
+.restaurantPlate i:nth-child(2) { background: #b2ad57; transform: rotate(95deg); left: 50px; top: 30px; }
+.restaurantPlate i:nth-child(3) { background: #aa472d; transform: rotate(-30deg); left: 20px; top: 44px; height: 25px; }
+.restaurantCopy { position: absolute; left: 7%; bottom: 18%; display: flex; flex-direction: column; gap: 8px; z-index: 2; text-shadow: 0 2px 8px #0007; }
+.restaurantCopy span,.restaurantCopy small { font-size: 8px; letter-spacing: .19em; color: #cfc4a1; }
+.restaurantCopy strong { font-family: Georgia,serif; font-size: clamp(25px,3.1vw,41px); font-weight: 400; letter-spacing: -.04em; }
+.restaurantBottom { position: absolute; left: 7%; right: 7%; bottom: 10px; border-top: 1px solid #bcad8350; padding-top: 9px; display: flex; justify-content: space-between; align-items: center; font-size: 7px; letter-spacing: .15em; }
+@media (max-width: 420px) {
+  .burgerArt { width: 38%; right: -5%; }
+  .burgerCopy strong { font-size: 24px; }
+  .storeProducts i { height: 70px; }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "pg-labs-portfolio",
+  "private": true,
+  "version": "1.2.1",
+  "type": "module",
+  "description": "PG Labs multilingual portfolio with six industry demos and a SweetAlert2-powered interactive business tools laboratory.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "lint": "oxlint --type-aware .",
+    "typecheck": "tsc -b"
+  },
+  "dependencies": {
+    "lucide-react": "^1.61.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.9.0",
+    "sweetalert2": "^11.26.25"
+  },
+  "devDependencies": {
+    "@types/node": "^24.6.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^5.2.0",
+    "oxlint": "^1.89.0",
+    "oxlint-tsgolint": "^7.0.2004",
+    "typescript": "~5.9.3",
+    "vite": "^7.3.1"
+  }
+}

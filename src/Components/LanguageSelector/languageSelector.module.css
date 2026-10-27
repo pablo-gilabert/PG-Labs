@@ -1,0 +1,73 @@
+.selector {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.trigger {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 800;
+}
+.trigger:hover, .trigger:focus-visible { border-color: var(--accentStrong); }
+.flag {
+  width: 26px;
+  height: 18px;
+  display: block;
+  border-radius: 3px;
+  object-fit: cover;
+  border: 1px solid #0002;
+  flex-shrink: 0;
+}
+.chevron, .chevronOpen { transition: transform .18s; }
+.chevronOpen { transform: rotate(180deg); }
+.options {
+  position: absolute;
+  z-index: 120;
+  right: 0;
+  top: calc(100% + 8px);
+  width: 190px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 15px 36px var(--shadow);
+}
+.option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px;
+  border: 0;
+  border-radius: 8px;
+  color: var(--text);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 650;
+}
+.option span { flex: 1; }
+.option small { color: var(--muted); font-size: 10px; }
+.option:hover { background: var(--surfaceAlt); }
+.active { background: var(--accentSoft); color: var(--accentStrong); }
+@media(max-width:460px) {
+  .trigger { min-height: 36px; padding: 6px; gap: 5px; }
+  .flag { width: 23px; height: 16px; }
+  .options { width: 178px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .chevron, .chevronOpen { transition: none; }
+}

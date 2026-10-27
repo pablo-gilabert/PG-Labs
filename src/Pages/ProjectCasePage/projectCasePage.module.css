@@ -1,0 +1,32 @@
+.backLine { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-top: 35px; color: var(--muted); font-size: 12px; }
+.backLine a { display: inline-flex; align-items: center; gap: 8px; color: var(--accentStrong); font-weight: 750; }
+.backLine a:hover { text-decoration: underline; }
+.hero { display: grid; grid-template-columns: 1.03fr 1fr; gap: clamp(30px, 4vw, 65px); align-items: center; padding: 76px 0 92px; }
+.heroCopy h1 { font-size: clamp(48px, 6vw, 93px); line-height: 1; letter-spacing: -.085em; margin: 21px 0; }
+.heroCopy h1 span { color: var(--accentStrong); }
+.heroCopy h2 { font-size: clamp(23px, 2.1vw, 32px); letter-spacing: -.05em; line-height: 1.25; margin-bottom: 18px; max-width: 550px; }
+.heroCopy p { color: var(--muted); line-height: 1.85; max-width: 580px; }
+.actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 28px; }
+.heroVisual { height: clamp(280px, 32vw, 450px); background: var(--surfaceAlt); border: 1px solid var(--line); padding: 14px; border-radius: 20px; position: relative; box-shadow: 0 23px 60px var(--shadow); }
+.heroVisual > div { box-shadow: 0 9px 30px #0004; }
+.heroVisual > span { position: absolute; bottom: -28px; right: 3px; font-size: 10px; color: var(--muted); letter-spacing: .05em; }
+.storyGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.storyCard { min-width: 0; padding: clamp(26px, 3vw, 43px); border: 1px solid var(--line); border-radius: 19px; background: var(--surface); }
+.storyIcon { color: var(--accentStrong); margin-bottom: 24px; }
+.storyCard h2 { font-size: clamp(19px, 1.8vw, 26px); line-height: 1.45; font-weight: 650; letter-spacing: -.035em; margin: 17px 0 0; }
+.lowerGrid { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(30px, 5vw, 90px); padding: 100px 0 50px; }
+.features h2 { margin: 18px 0 34px; }
+.features ul { list-style: none; padding: 0; margin: 0; }
+.features li { display: flex; gap: 13px; align-items: flex-start; border-bottom: 1px solid var(--line); padding: 15px 0; font-weight: 650; font-size: 15px; }
+.features li svg { flex: 0 0 auto; color: var(--accentStrong); }
+.tags { margin-top: 28px; display: flex; gap: 8px; flex-wrap: wrap; }
+.tags span { padding: 10px 13px; border: 1px solid var(--line); color: var(--muted); background: var(--surface); border-radius: 9px; font-size: 12px; }
+.sideNotes { display: flex; flex-direction: column; gap: 17px; }
+.sideNotes > div { padding: 26px; border: 1px solid var(--line); border-radius: 17px; background: var(--surface); }
+.sideNotes svg { color: var(--accentStrong); }
+.sideNotes h3 { margin: 15px 0 10px; font-size: 16px; }
+.sideNotes p { color: var(--muted); line-height: 1.7; font-size: 13px; margin: 0; }
+.sideNotes a { margin-top: 17px; display: inline-flex; align-items: center; gap: 8px; color: var(--accentStrong); font-size: 13px; font-weight: 750; }
+.disclaimer { max-width: 850px; color: var(--muted); font-size: 12px; line-height: 1.7; border-left: 2px solid var(--line); padding-left: 13px; }
+@media (max-width: 900px) { .hero { grid-template-columns: 1fr; padding-top: 50px; } .heroVisual { height: 370px; max-width: 720px; width: 100%; } .lowerGrid { grid-template-columns: 1fr; padding-top: 75px; } }
+@media (max-width: 600px) { .backLine > span { display: none; } .hero { padding: 45px 0 77px; } .heroVisual { height: 270px; } .storyGrid { grid-template-columns: 1fr; } .lowerGrid { padding-top: 60px; } }

@@ -1,0 +1,12 @@
+.header{position:sticky;top:0;z-index:80;background:var(--header);border-bottom:1px solid var(--line);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
+.inner{height:84px;display:flex;align-items:center;gap:clamp(20px,3vw,55px)}
+.brand{display:inline-flex;align-items:center;gap:13px;white-space:nowrap;flex-shrink:0;min-width:0}
+.brandLogo{display:block;height:42px;width:auto;max-width:220px;object-fit:contain}
+.brandMeta{display:flex;flex-direction:column;justify-content:center;min-width:0}
+.brandMeta small{color:var(--muted);letter-spacing:.17em;font-size:8px;font-weight:750;display:block}
+.navigation{display:flex;align-items:center;justify-content:center;flex:1;gap:clamp(12px,1.8vw,29px)}.navLink{font-size:13px;color:var(--muted);font-weight:650;white-space:nowrap;transition:color .2s}.navLink:hover,.active{color:var(--text)}.active{position:relative}.active::after{content:"";position:absolute;bottom:-11px;left:0;right:0;height:2px;background:var(--accent);border-radius:3px}
+.controls{display:flex;align-items:center;gap:10px;margin-left:auto}.themeButton{width:39px;height:39px;display:grid;place-items:center;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:11px}.themeButton:hover{border-color:var(--accent)}.contactButton{display:flex;align-items:center;gap:9px;background:var(--accent);padding:13px 17px;border-radius:10px;color:#151b13;font-size:13px;font-weight:850;white-space:nowrap;transition:transform .2s}.contactButton:hover{transform:translateY(-2px)}.menuButton,.mobileContact{display:none}
+@media(max-width:1180px){.navigation{gap:13px}.inner{gap:18px}.brandLogo{height:38px;max-width:190px}.contactButton{padding:12px}.navLink{font-size:12px}}
+@media(max-width:980px){.brandMeta{display:none}}
+@media(max-width:860px){.inner{height:70px}.brandLogo{height:34px;max-width:168px}.navigation{display:none;position:absolute;top:calc(100% + 1px);left:0;right:0;padding:20px max(22px,calc((100vw - var(--pageWidth))/2));background:var(--surface);border-bottom:1px solid var(--line);box-shadow:0 20px 35px #0004;flex-direction:column;align-items:stretch;gap:2px}.open{display:flex}.navigation a{font-size:15px;padding:14px 9px}.active::after{display:none}.mobileContact{display:block}.contactButton{display:none}.menuButton{display:grid;place-items:center;border:0;background:transparent;color:var(--text);padding:9px}}
+@media(max-width:460px){.brandLogo{height:30px;max-width:148px}.controls{gap:5px}.themeButton{width:34px;height:34px}.menuButton{padding:6px}}
