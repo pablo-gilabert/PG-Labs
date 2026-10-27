@@ -1,9 +1,9 @@
 {
   "name": "pg-labs-portfolio",
   "private": true,
-  "version": "1.4.3",
+  "version": "1.5.0",
   "type": "module",
-  "description": "PG Labs — multilingual React and TypeScript freelance portfolio with live case studies, interactive demos, Vitest unit tests and Playwright E2E coverage.",
+  "description": "PG Labs — multilingual React and TypeScript freelance portfolio with live case studies, interactive demos, Vitest and Playwright tests, and GitHub Actions CI.",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

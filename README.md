@@ -1,8 +1,10 @@
 # PG Labs — Freelance Developer Portfolio
 
-**Current version:** 1.4.3
+[![Quality Checks](https://github.com/pablo-gilabert/PG-Labs/actions/workflows/ci.yml/badge.svg)](https://github.com/pablo-gilabert/PG-Labs/actions/workflows/ci.yml)
 
-> **GitHub description:** PG Labs is a multilingual React and TypeScript freelance portfolio featuring six live projects, interactive business demos, Vitest and Playwright tests, responsive design, and dark/light themes.
+**Current version:** 1.5.0
+
+> **GitHub description:** PG Labs is a multilingual React and TypeScript freelance portfolio featuring six live projects, interactive business demos, Vitest and Playwright tests, GitHub Actions CI, responsive design, and dark/light themes.
 
 A production-oriented, mobile-first portfolio built for **Pablo Gilabert**, a freelance frontend developer based in Buenos Aires, Argentina. It showcases existing portfolio demos, web development and redesign services, technical experience, and a hands-on feature playground for potential clients.
 
@@ -22,7 +24,7 @@ The brand assets live under `public/brand/` and `public/`.
 - **Cart controls:** remove every unit of one product, empty the entire cart with confirmation, set product quantities in a SweetAlert2 modal, and retain convenient stepper buttons.
 - **Client-only demonstration data:** stored in browser `localStorage`; no real authentication, payment processing, API, or database is implied.
 - **Accessibility and responsiveness:** semantic pages, keyboard navigation, focus states, labeled controls, reduced-motion support, and styles from 320px through large/4K displays.
-- **Quality checks:** Vitest unit/component tests, Playwright Chromium desktop/mobile E2E tests, V8 coverage reports, and Oxlint configured for the automatic JSX runtime.
+- **Quality checks:** Vitest unit/component tests, Playwright Chromium desktop/mobile E2E tests, V8 coverage reports, Oxlint configured for the automatic JSX runtime, and GitHub Actions CI on pushes and pull requests.
 - **Deployment ready:** Vite production build, TypeScript checks, Oxlint, and Vercel SPA rewrites.
 
 ## Stack
@@ -85,6 +87,9 @@ Tests/
     └── Responsive.spec.ts
 Playwright.config.ts
 tsconfig.e2e.json
+.github/
+└── workflows/
+    └── ci.yml
 ```
 
 React components, types, and new TypeScript filenames use **PascalCase**. CSS module filenames and CSS classes use **camelCase**. Code and code comments are in **English**; user-facing text is localized.
@@ -114,6 +119,18 @@ The E2E tests continue to assert saved browser data independently of the active 
 | `npm run test:e2e:headed` | Run browser tests with a visible browser |
 | `npm run test:e2e:report` | Open the last Playwright HTML report |
 | `npm run test:all` | Typecheck, lint, unit tests, build, and E2E tests |
+
+## Continuous integration (GitHub Actions)
+
+The workflow in [`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs automatically on every push to `main`, every pull request targeting `main`, and manually through **Actions → Quality Checks → Run workflow**. GitHub reports the result as a check on the commit or pull request. It does **not** deploy, modify repository content, or merge pull requests.
+
+On an Ubuntu runner with Node.js 22, the workflow installs the committed dependencies with `npm ci`, runs `npm audit --audit-level=moderate`, checks TypeScript and Oxlint, executes Vitest unit/component tests, produces a Vite build, installs Chromium with its required Linux libraries, and runs the Playwright desktop/mobile E2E suite. The current locally verified baseline is **44 Vitest tests and 32 Playwright tests**. CI repeats these checks independently on Linux; the first hosted run must still be verified.
+
+**Lockfile requirement:** `npm ci` requires a committed `package-lock.json` consistent with `package.json`. Keep the existing lockfile in the repository when copying an updated source ZIP over a clone. After changing package metadata or dependencies, run `npm install` locally and commit **both** `package.json` and `package-lock.json` before pushing. Do not delete the lockfile or add it to `.gitignore`. A fresh clone can install with `npm ci` once these files are present.
+
+When Playwright reports failures, the workflow uploads `playwright-report/` and `test-results/` as a downloadable **playwright-diagnostics** artifact (retained for 14 days); the Playwright configuration captures screenshots, videos, and traces for failing tests. Open the failing run in **GitHub → Actions → Quality Checks** to view the failed step and download the artifact. The workflow grants the token read-only repository access and does not use deployment secrets. A green check does not automatically prevent direct pushes to `main`; to require it for merges, configure a branch protection rule or ruleset with the `TypeScript · Oxlint · Vitest · Playwright` job as a required status check after its first successful run.
+
+Local verification remains available with `npm run test:all`. The local Playwright CLI may need `npx playwright install chromium` once, whereas the CI runner installs Chromium automatically. The GitHub Actions workflow is separate from Vercel deployment and is not a post-deployment live-site test.
 
 The project deploys on **Vercel** using the Vite framework preset. The `vercel.json` rewrite supports direct navigation to React Router pages such as `/projects`, `/projects/academy`, and `/lab`. Use `npm run build` as the build command and `dist` as output directory. For a commercial production deployment, use a Vercel plan that permits commercial use.
 
