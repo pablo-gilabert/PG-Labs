@@ -15,7 +15,7 @@ export function ProjectArtwork({ variant }: ProjectArtworkProps) {
 
   if (variant === 'burger') {
     return (
-      <div className={`${styles.frame} ${styles.burger}`} aria-hidden="true">
+      <div className={styles.frame} aria-hidden="true">
         <div className={styles.browserBar}>
           <div className={styles.dots}><i/><i/><i/></div>
           <span>blend-burger-demo.vercel.app</span>
@@ -34,7 +34,7 @@ export function ProjectArtwork({ variant }: ProjectArtworkProps) {
 
   if (variant === 'store') {
     return (
-      <div className={`${styles.frame} ${styles.store}`} aria-hidden="true">
+      <div className={styles.frame} aria-hidden="true">
         <div className={styles.browserBar}>
           <div className={styles.dots}><i/><i/><i/></div>
           <span>dummy-data-tawny-three.vercel.app</span>
@@ -53,7 +53,7 @@ export function ProjectArtwork({ variant }: ProjectArtworkProps) {
   }
 
   return (
-    <div className={`${styles.frame} ${styles.restaurant}`} aria-hidden="true">
+    <div className={styles.frame} aria-hidden="true">
       <div className={styles.browserBar}>
         <div className={styles.dots}><i/><i/><i/></div>
         <span>restaurant-demo-iota-taupe.vercel.app</span>

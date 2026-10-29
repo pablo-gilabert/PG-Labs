@@ -30,12 +30,12 @@ export default defineConfig({
     {
       name: 'chromium-desktop',
       use: { ...devices['Desktop Chrome'] },
-      testIgnore: '**/Responsive.spec.ts',
+      testIgnore: ['**/Responsive.spec.ts', '**/AccessibilityMobile.spec.ts'],
     },
     {
       name: 'chromium-mobile',
       use: { ...devices['Pixel 7'] },
-      testMatch: '**/Responsive.spec.ts',
+      testMatch: ['**/Responsive.spec.ts', '**/AccessibilityMobile.spec.ts'],
     },
   ],
   // Running the build first catches bundling problems before functional testing.

@@ -17,7 +17,7 @@
   font-size: 9px;
   letter-spacing: .015em;
   background: #e7e9e4;
-  color: #6f7772;
+  color: #4f6054;
 }
 .browserBar > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .dots { display: flex; gap: 4px; }
@@ -45,7 +45,7 @@
 .storeNavigation b { font-size: 15px; letter-spacing: -.06em; }
 .storeNavigation b span { color: #cb926e; }
 .storeHeadline { display: flex; align-items: flex-start; flex-direction: column; gap: 6px; margin: 14px 0 20px; }
-.storeHeadline span { font-size: 8px; letter-spacing: .16em; color: #89908b; }
+.storeHeadline span { font-size: 8px; letter-spacing: .16em; color: #4d6055; }
 .storeHeadline strong { font-size: 23px; letter-spacing: -.05em; }
 .storeProducts { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 11px; }
 .storeProducts > div { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
@@ -56,7 +56,7 @@
 .storeProducts i::before { content: ''; position: absolute; inset: 20% 32% 12%; border-radius: 16px 16px 10px 10px; background: #fff8; box-shadow: 7px 8px 13px #2222; transform: rotate(-7deg); }
 .storeProducts div:nth-child(2) i::before { border-radius: 50% 50% 30% 30%; transform: rotate(10deg); }
 .storeProducts div:nth-child(3) i::before { border-radius: 20%; transform: rotate(-12deg); }
-.storeProducts span { color: #89908b; font-size: 7px; letter-spacing: .08em; }
+.storeProducts span { color: #4d6055; font-size: 7px; letter-spacing: .08em; }
 .storeProducts b { font-size: 10px; letter-spacing: -.02em; }
 .restaurantCanvas { background: #162721; color: #ebdfc5; padding: 17px 19px; }
 .restaurantNavigation { display: flex; justify-content: space-between; align-items: center; font-family: Georgia,serif; font-size: 14px; letter-spacing: .3em; }

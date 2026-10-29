@@ -50,8 +50,18 @@ jobs:
       - name: Lint source code
         run: npm run lint
 
-      - name: Run unit and component tests
-        run: npm run test:unit
+      # Vitest runs the original unit suite and produces an HTML/LCOV coverage report.
+      - name: Run unit tests and collect coverage
+        run: npm run test:coverage
+
+      - name: Upload Vitest coverage report
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: vitest-coverage-${{ github.run_id }}-${{ github.run_attempt }}
+          path: coverage/
+          if-no-files-found: ignore
+          retention-days: 14
 
       - name: Build production assets
         run: npm run build
@@ -60,7 +70,7 @@ jobs:
       - name: Install Chromium and system dependencies
         run: npx playwright install --with-deps chromium
 
-      - name: Run end-to-end tests
+      - name: Run end-to-end and accessibility tests
         run: npm run test:e2e
 
       - name: Upload Playwright diagnostics when a check fails
