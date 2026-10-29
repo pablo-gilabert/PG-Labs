@@ -17,7 +17,7 @@ export function Header() {
     ];
     return (<header className={styles.header}>
       <div className={`container ${styles.inner}`}>
-        <Link to="/" className={styles.brand} aria-label="PG Labs — Home" onClick={() => setOpen(false)}>
+        <Link to="/" className={styles.brand} aria-label="PG Labs — WEB DEVELOPMENT · DIGITAL PRODUCTS — Home" onClick={() => setOpen(false)}>
           <img className={styles.brandLogo} src={theme === 'dark' ? '/brand/pgLabsLogoDark.png' : '/brand/pgLabsLogo.png'} alt="PG Labs"/>
           <span className={styles.brandMeta}><small>WEB DEVELOPMENT · DIGITAL PRODUCTS</small></span>
         </Link>

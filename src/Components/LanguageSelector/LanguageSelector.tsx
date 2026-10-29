@@ -58,9 +58,9 @@ export function LanguageSelector() {
       <button
         className={styles.trigger}
         type="button"
-        aria-label={`${selectorLabels[language]}: ${current.name}`}
+        aria-label={`${selectorLabels[language]}: ${current.code.toUpperCase()} — ${current.name}`}
         aria-expanded={open}
-        aria-controls="pg-labs-language-options"
+        aria-controls={open ? 'pg-labs-language-options' : undefined}
         onClick={() => setOpen((value) => !value)}
       >
         <img className={styles.flag} src={current.flag} alt="" width={26} height={18} />

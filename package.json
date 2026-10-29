@@ -1,9 +1,9 @@
 {
   "name": "pg-labs-portfolio",
   "private": true,
-  "version": "1.5.0",
+  "version": "1.6.2",
   "type": "module",
-  "description": "PG Labs — multilingual React and TypeScript freelance portfolio with live case studies, interactive demos, Vitest and Playwright tests, and GitHub Actions CI.",
+  "description": "PG Labs — multilingual React and TypeScript freelance portfolio with live case studies, interactive demos, Vitest coverage, Playwright accessibility checks, and GitHub Actions CI.",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -18,7 +18,8 @@
     "test:e2e:ui": "playwright test --config=Playwright.config.ts --ui",
     "test:e2e:headed": "playwright test --config=Playwright.config.ts --headed",
     "test:e2e:report": "playwright show-report",
-    "test:all": "npm run typecheck && npm run lint && npm run test:unit && npm run build && npm run test:e2e"
+    "test:all": "npm run typecheck && npm run lint && npm run test:coverage && npm run build && npm run test:e2e",
+    "test:a11y": "playwright test --config=Playwright.config.ts Accessibility.spec.ts AccessibilityMobile.spec.ts"
   },
   "dependencies": {
     "lucide-react": "^1.61.0",
@@ -41,6 +42,7 @@
     "jsdom": "^27.0.0",
     "@testing-library/react": "^16.3.0",
     "@testing-library/jest-dom": "^6.9.1",
-    "@playwright/test": "^1.64.1"
+    "@playwright/test": "^1.64.1",
+    "@axe-core/playwright": "^4.14.0"
   }
 }

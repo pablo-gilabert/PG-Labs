@@ -173,6 +173,10 @@ export function LabPage() {
     <span>{item.desc}</span>
     <ArrowUpRight size={16} className={styles.tabArrow}/>
     </button>; })}</div>
+    {/* Every tab references a real panel ID, including currently inactive panels. */}
+    {Tabs.filter((item) => item.id !== tab).map((item) => (
+      <div role="tabpanel" id={`panel-${item.id}`} aria-labelledby={`tab-${item.id}`} key={item.id} hidden />
+    ))}
     <div className={styles.workbench} role="tabpanel" id={`panel-${tab}`} aria-labelledby={`tab-${tab}`} key={tab}>
       {tab === 'students' && <StudentsDemo text={text} students={students} setStudents={setStudents}/>}
       {tab === 'services' && <ServicesDemo text={text} language={language} services={services} setServices={setServices}/>}

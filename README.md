@@ -2,7 +2,7 @@
 
 [![Quality Checks](https://github.com/pablo-gilabert/PG-Labs/actions/workflows/ci.yml/badge.svg)](https://github.com/pablo-gilabert/PG-Labs/actions/workflows/ci.yml)
 
-**Current version:** 1.5.0
+**Current version:** 1.6.2
 
 > **GitHub description:** PG Labs is a multilingual React and TypeScript freelance portfolio featuring six live projects, interactive business demos, Vitest and Playwright tests, GitHub Actions CI, responsive design, and dark/light themes.
 
@@ -243,3 +243,28 @@ The `package.json` minimum versions of `vitest` and `@vitest/coverage-v8` are **
 ## E2E helper consistency (1.4.1)
 
 `Tests/E2E/TestHelpers.ts` exports the shared Playwright modal, navigation, and localStorage helpers used by the student, service, section, and cart specifications. The helper reads the actual `gs-demo-*` keys and interacts with SweetAlert2 via accessible buttons and stable selectors.
+
+## Accessibility and coverage (v1.6.1)
+
+The v1.6.1 accessibility fixes align the brand and language-switcher accessible names with visible text and strengthen text contrast in dashboard illustrations, project previews, and the light-theme footer link. These are application fixes, not suppressed axe rules.
+
+PG Labs runs automated accessibility audits with `@axe-core/playwright` (axe-core) in Chromium. Scans cover public pages, a case study, both themes, the three supported languages, the student modal, and a mobile menu. These checks use WCAG 2.0/2.1/2.2 Level A and AA tagged rules. They are **not** a certification of WCAG conformance: manual keyboard, screen-reader and usability checks remain necessary. A failed scan attaches `accessibility-violations.json` to the Playwright HTML report, with affected elements and remediation links.
+
+```bash
+npm install
+npm exec playwright install chromium
+npm run test:a11y       # Accessibility cases only (desktop and mobile)
+npm run test:e2e        # Functional + accessibility E2E tests
+npm run test:coverage   # Vitest suite + full source coverage report
+npm run test:all        # TypeScript, Oxlint, coverage, build and Playwright
+```
+
+The coverage report is written to `coverage/index.html`; `coverage/coverage-summary.json` and `coverage/lcov.info` are also generated. All application source files (including untested files) are counted except translation/demo content, the entry point, test helpers and type declarations. A minimum of 90% statements/lines/functions and 75% branches is enforced specifically for `src/Utils/CartLogic.ts`, which is well covered by unit tests. There is deliberately **no global coverage threshold yet**: establish the actual baseline and increase it incrementally rather than presenting a misleading aggregate.
+
+The `Quality Checks` GitHub Actions job retains the exact name `TypeScript · Oxlint · Vitest · Playwright`, so the existing protected-branch status check remains valid. CI runs Vitest with coverage, all Playwright E2E and accessibility audits, and uploads the Vitest coverage report for 14 days. On E2E failures, it also uploads Playwright screenshots/traces and accessibility JSON diagnostics.
+
+For the protected `main` branch, create a `feature/` branch, run `npm install` to update the committed `package-lock.json` after the new accessibility dependency is added, then open a Pull Request. Never commit `node_modules`, `coverage`, `dist`, or browser artifacts.
+
+## Maintenance update (v1.6.2)
+
+Renamed the default `@axe-core/playwright` import used in accessibility checks to avoid Oxlint `import/no-named-as-default` confusion with the package’s named `AxeBuilder` export. The scanner and WCAG assertions remain unchanged.
