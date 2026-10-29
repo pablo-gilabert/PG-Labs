@@ -1,7 +1,7 @@
 {
   "name": "pg-labs-portfolio",
   "private": true,
-  "version": "1.6.2",
+  "version": "1.7.2",
   "type": "module",
   "description": "PG Labs — multilingual React and TypeScript freelance portfolio with live case studies, interactive demos, Vitest coverage, Playwright accessibility checks, and GitHub Actions CI.",
   "scripts": {

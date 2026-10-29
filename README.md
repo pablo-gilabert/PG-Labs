@@ -2,7 +2,7 @@
 
 [![Quality Checks](https://github.com/pablo-gilabert/PG-Labs/actions/workflows/ci.yml/badge.svg)](https://github.com/pablo-gilabert/PG-Labs/actions/workflows/ci.yml)
 
-**Current version:** 1.6.2
+**Current version:** 1.7.2
 
 > **GitHub description:** PG Labs is a multilingual React and TypeScript freelance portfolio featuring six live projects, interactive business demos, Vitest and Playwright tests, GitHub Actions CI, responsive design, and dark/light themes.
 
@@ -62,11 +62,17 @@ src/
 ├── Styles/
 │   └── global.css
 ├── Tests/
+│   ├── Artwork.test.tsx
 │   ├── CartLogic.test.ts
 │   ├── DemoStorage.test.ts
+│   ├── LabOperations.test.tsx
 │   ├── LabPage.test.tsx
+│   ├── LanguageSelector.test.tsx
+│   ├── NavigationAndLayout.test.tsx
+│   ├── Pages.test.tsx
 │   ├── ProjectCard.test.tsx
 │   ├── SiteContext.test.tsx
+│   ├── SweetAlertForms.test.ts
 │   └── TestSetup.ts
 ├── Utils/
 │   ├── CartLogic.ts
@@ -124,7 +130,7 @@ The E2E tests continue to assert saved browser data independently of the active 
 
 The workflow in [`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs automatically on every push to `main`, every pull request targeting `main`, and manually through **Actions → Quality Checks → Run workflow**. GitHub reports the result as a check on the commit or pull request. It does **not** deploy, modify repository content, or merge pull requests.
 
-On an Ubuntu runner with Node.js 22, the workflow installs the committed dependencies with `npm ci`, runs `npm audit --audit-level=moderate`, checks TypeScript and Oxlint, executes Vitest unit/component tests, produces a Vite build, installs Chromium with its required Linux libraries, and runs the Playwright desktop/mobile E2E suite. The current locally verified baseline is **44 Vitest tests and 32 Playwright tests**. CI repeats these checks independently on Linux; the first hosted run must still be verified.
+On an Ubuntu runner with Node.js 22, the workflow installs the committed dependencies with `npm ci`, runs `npm audit --audit-level=moderate`, checks TypeScript and Oxlint, executes Vitest unit/component tests, produces a Vite build, installs Chromium with its required Linux libraries, and runs the Playwright desktop/mobile E2E suite. The v1.6.2 baseline validated locally and on GitHub Actions was **44 Vitest tests and 45 Playwright tests (including 13 accessibility audits)**. The v1.7.1 component/route tests are pending a fresh run; CI runs the updated suites independently on Linux.
 
 **Lockfile requirement:** `npm ci` requires a committed `package-lock.json` consistent with `package.json`. Keep the existing lockfile in the repository when copying an updated source ZIP over a clone. After changing package metadata or dependencies, run `npm install` locally and commit **both** `package.json` and `package-lock.json` before pushing. Do not delete the lockfile or add it to `.gitignore`. A fresh clone can install with `npm ci` once these files are present.
 
@@ -189,13 +195,18 @@ Built to communicate capabilities clearly, demonstrate functionality honestly, a
 
 ## Automated testing (Vitest and React Testing Library)
 
-The initial automated suite exercises **production logic**, not just test-only reimplementations:
+The automated suite exercises **production logic and real React components**, not just test-only reimplementations:
 
 - `CartLogic.test.ts` verifies totals, unknown product IDs, quantity updates, max quantity, targeted removal, and immutability. `LabPage.tsx` calls these same `CartLogic.ts` functions.
 - `DemoStorage.test.ts` covers browser persistence, invalid JSON, runtime validation, denied storage access, and ARS localization.
 - `SiteContext.test.tsx` checks default language/theme, remembered preferences, switching, and invalid settings.
 - `ProjectCard.test.tsx` checks project case-study routes, live demo and repository links, and industry labels.
 - `LabPage.test.tsx` checks real React state transitions for student management, service/section creation, cart operations, reset and localStorage. SweetAlert2 presentation is mocked so these tests do not depend on animation timing.
+- `LabOperations.test.tsx` adds editing, deletion, visibility, section ordering, order registration, and invalid saved-data regressions.
+- `NavigationAndLayout.test.tsx` checks the header, footer, application routes and page metadata. `LanguageSelector.test.tsx` exercises all three languages, Escape/outside-click behavior, focus, and persistence.
+- `Pages.test.tsx` exercises page content, links, project filters, case studies, localized copy, contact-field validation, and not-found navigation.
+- `Artwork.test.tsx` covers the six illustrative project variants and dashboard rendering.
+- `SweetAlertForms.test.ts` checks the real form-builder DOM, required fields, quantity bounds, string trimming, checkbox state, focus, safe text handling, confirmation, and success dialogs. Only the SweetAlert2 dialog host is mocked.
 
 Run `npm install` before running the tests for the first time. Use `npm run test:unit` for a single pass, `npm run test:watch` for interactive development, or `npm run test:coverage` for a coverage report in `coverage/` (gitignored). Vitest is configured in the existing `vite.config.ts`, with `jsdom` and `src/Tests/TestSetup.ts`. The tests do not require a real API or a deployed Vercel instance.
 
@@ -259,7 +270,7 @@ npm run test:coverage   # Vitest suite + full source coverage report
 npm run test:all        # TypeScript, Oxlint, coverage, build and Playwright
 ```
 
-The coverage report is written to `coverage/index.html`; `coverage/coverage-summary.json` and `coverage/lcov.info` are also generated. All application source files (including untested files) are counted except translation/demo content, the entry point, test helpers and type declarations. A minimum of 90% statements/lines/functions and 75% branches is enforced specifically for `src/Utils/CartLogic.ts`, which is well covered by unit tests. There is deliberately **no global coverage threshold yet**: establish the actual baseline and increase it incrementally rather than presenting a misleading aggregate.
+The coverage report is written to `coverage/index.html`; `coverage/coverage-summary.json` and `coverage/lcov.info` are also generated. All application source files (including untested files) are counted except translation/demo content, the entry point, test helpers and type declarations. A minimum of 90% statements/lines/functions and 75% branches is enforced specifically for `src/Utils/CartLogic.ts`, which is well covered by unit tests. The previous v1.6.2 baseline was **38.95% global line coverage**. The v1.7.1 suite was measured locally at **95.02% global line coverage**, **92.87% statement coverage**, **86.16% branch coverage**, and **94.62% function coverage**, with **117 Vitest tests passing**. The 45 Playwright tests, including 13 axe-core accessibility audits, passed independently and are not included in Vitest V8 coverage. The cart-logic threshold remains enforced; a global threshold can be selected after results are consistent across CI runs.
 
 The `Quality Checks` GitHub Actions job retains the exact name `TypeScript · Oxlint · Vitest · Playwright`, so the existing protected-branch status check remains valid. CI runs Vitest with coverage, all Playwright E2E and accessibility audits, and uploads the Vitest coverage report for 14 days. On E2E failures, it also uploads Playwright screenshots/traces and accessibility JSON diagnostics.
 
@@ -268,3 +279,19 @@ For the protected `main` branch, create a `feature/` branch, run `npm install` t
 ## Maintenance update (v1.6.2)
 
 Renamed the default `@axe-core/playwright` import used in accessibility checks to avoid Oxlint `import/no-named-as-default` confusion with the package’s named `AxeBuilder` export. The scanner and WCAG assertions remain unchanged.
+
+
+## Improved unit and component coverage (v1.7.1)
+
+- Added React Testing Library suites for application routing and metadata, the shared header/footer, three-language selection, portfolio filters, detailed project pages, service and contact screens, and all six project illustrations.
+- Added direct validation tests for SweetAlert2 form helpers, including malformed numbers, missing required fields, safe DOM text handling, and confirm/cancel behavior.
+- Added stateful laboratory regressions for editing records, service visibility, section ordering and removal, cart order registration, and invalid persisted data.
+- Kept all existing Playwright E2E/accessibility tests and the protected branch's required **TypeScript · Oxlint · Vitest · Playwright** CI check unchanged. No third-party dependencies are added.
+- Fixed selectors in the language option and mobile navigation tests: option buttons are identified by their visible labels, while the CSS-hidden mobile toggle is found by its ARIA label in jsdom. This does not change UI behavior or relax assertions.
+- The Vitest coverage report is authoritative for the new percentage; E2E browser tests are complementary and are not included in the Vitest V8 percentage.
+
+To validate on a local feature branch, retain your existing `package-lock.json` when extracting the archive, run `npm install` to align its project version, then run `npm run test:all`. Merge only when that command and GitHub Actions pass on the Pull Request.
+
+## Lint consistency (v1.7.2)
+
+Removed unsafe or unnecessary type assertions from the new Vitest suites without disabling Oxlint rules. Stored demo data is checked at runtime before assertions, DOM element types are narrowed with `instanceof`, and the SweetAlert2 test host uses a hoisted, strongly typed mock state. The production application and existing E2E tests are unchanged.
